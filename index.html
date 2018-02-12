@@ -7,8 +7,17 @@
     </head>
     <body>
       <script type="text/javascript">
+
+      div {
+        font-size: 24px;
+        font-weight: bold;
+        font-style: sans-serif;
+      }
+
       var dataset = [5, 10, 15, 20, 25];
-      d3.select("body").selectAll("p").data(dataset).enter().append("p").text(function(d){ return "I can count up to " + d; }).style("color", function(d) {
+      d3.select("body").selectAll("p").data(dataset).enter().append("p").text(function(d){
+        return "I can count up to " + d; })
+        .style("color", function(d) {
         if (d > 15){
           return "red";
         }
