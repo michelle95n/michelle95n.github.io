@@ -10,7 +10,7 @@
 
       var dataset = [5, 10, 15, 20, 25];
 
-      d3.select("body").selectAll("p").data(dataset).enter().append("p").text(function(d){
+      d3.select("body").selectAll("p").data(dataset).enter().append("p").replaceAll('<p>','[bold]').text(function(d){
         return "I can count up to " + d; })
         .style("color", function(d) {
         if (d > 15){
@@ -20,8 +20,6 @@
           return "black";
         }
       });
-
-      <text font-family="serif" font-size=24 >Test</text>
 
       </script>
     </body>
