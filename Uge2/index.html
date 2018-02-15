@@ -3,26 +3,74 @@
   <head>
       <meta charset="utf-8">
       <title>D3 Page Template</title>
-      <script type="text/javascript" src="d3/d3.js"></script>
+      <script type="text/javascript" src="../d3.js"></script>
+
+      <style type="text/css">
+      div.bar {
+        display: inline-block;
+        width: 20px;
+        background-color: teal;
+        margin-right: 2px;
+      }
+      </style>
+
   </head>
   <body>
       <script type="text/javascript">
 
-      // Make scatterplot
-      var w = 500;
-      var h = 100;
+      /*var dataset = [5, 10, 15, 20, 25];
+      var dataset1 = President.csv.toObjects(csv);
+      var datasetPre = [];
+      function(d){
+      for(var i = 0; i < 44; i++){
+        var newPoint = d[2];
+        datasetPre.push(newPoint);
+      }};*/
 
-      // Initialize space for the scatterplot
+      /*d3.csv("/..data/President.csv", function(d) {
+        return {
+          pNumber : +d.number,
+          President : d.President,
+          Month : +d.Month,
+        };
+      }, function(data) {
+        console.log(data[0]);
+      });*/
+
+      var field1=[];
+      var field2=[];
+      var field3=[];
+
+      d3.csv("../President.csv",function(csv){
+              csv.map(function(d){
+                  field1.push(+d.pNumber);
+                  field2.push(d.President);
+                  field3.push(+d.Month);
+                })
+                //called after the AJAX is success
+                console.log("field1",field1);
+                console.log("field2",field2);
+                console.log("field3",field3);
+                console.log("field1",field1[0]);
+              });
+
+      d3.select("body").selectAll("div").data(field3).enter().append("div").attr("class", "bar").style("height", function(d) {
+        var barHeight = d * 5;
+        return barHeight + "px";
+      }).attr("fill", "purple");
+
+
+      /*// Initialize space for the plot
       var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
 
 
-      svg.selectAll("circle").data(President.csv).enter().append("circle").attr("cx", function(d){
-        return d[1];
-      }).attr("cy", function(d){
+      svg.selectAll("circle").data(dataset).enter().append("circle").attr("cx", function(d){
         return d[2];
+      }).attr("cy", function(d){
+        return 10;
       }).attr("r", function(d){
-        return Math.sqrt((h - d[1]));
-      });
+        return 5;
+      }).attr("fill", "purple");*/
 
       /*svg.selectAll("text").data(President.csv).enter().append("text").text(function(d){
         return d[0] + "," + d[1];
