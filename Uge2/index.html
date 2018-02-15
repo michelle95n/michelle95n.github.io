@@ -63,8 +63,8 @@
         console.log(data[0]);
       });*/
 
-      d3.select("body").selectAll("div").data(data).enter().append("div").attr("class", "bar").style("height", function(d) {
-        var barHeight = d[2] * 5;
+      d3.select("body").selectAll("div").data(field3).enter().append("div").attr("class", "bar").style("height", function(d) {
+        var barHeight = d * 5;
         return barHeight + "px";
       });
 
