@@ -37,9 +37,9 @@
         console.log(data[0]);
       });*/
 
-      var field1=[];
+      /*var field1=[];
       var field2=[];
-      var field3=[];
+      var field3=[];*/
 
       /*d3.csv("President.csv",function(data){
         data.forEach(function(d) {
@@ -60,10 +60,10 @@
         console.log(data[0]);
       });
 
-      d3.select("body").selectAll("div").data(data).enter().append("div").attr("class", "bar").style("height", function(d[2]) {
-        var barHeight = d * 5;
+      d3.select("body").selectAll("div").data(data).enter().append("div").attr("class", "bar").style("height", function(d) {
+        var barHeight = d[2] * 5;
         return barHeight + "px";
-      }).attr("fill", "purple");
+      });
 
 
       /*// Initialize space for the plot
