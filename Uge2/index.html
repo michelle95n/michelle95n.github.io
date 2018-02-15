@@ -37,17 +37,20 @@
         console.log(data[0]);
       });*/
 
-      /*var field1=[];
+      var field1=[];
       var field2=[];
-      var field3=[];*/
+      var field3=[];
 
       d3.csv("President.csv",function(data){
         data.forEach(function(d) {
-          d.pNumber = +d.pNumber;
+          /*d.pNumber = +d.pNumber;
           d.President = d.President;
-          d.Months = +d.Months;
+          d.Months = +d.Months;*/
+          field1.push(+d.pNumber);
+          field2.push(d.President);
+          field3.push(+d.Months);
         });
-          console.log(data[0]);
+          //console.log(data[0]);
         });
 
       /*d3.csv("President.csv", function(data) {
