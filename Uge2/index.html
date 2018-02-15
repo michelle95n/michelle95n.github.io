@@ -44,7 +44,7 @@
       d3.csv("President.csv",function(data){
         data.forEach(function(d) {
           d.pNumber = +d.pNumber;
-          d.President = +d.President;
+          d.President = d.President;
           d.Month = +d.Month;
         });
           console.log(data[0]);
