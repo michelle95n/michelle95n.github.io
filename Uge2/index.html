@@ -43,9 +43,9 @@
 
       d3.csv("President.csv",function(data){
         data.forEach(function(d) {
-          field1.push(d.pNumber);
+          field1.push(+d.pNumber);
           field2.push(d.President);
-          field3.push(d.Months);
+          field3.push(+d.Months);
         });
         });
 
