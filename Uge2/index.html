@@ -18,14 +18,7 @@
   <body>
       <script type="text/javascript">
 
-      /*var dataset = [5, 10, 15, 20, 25];
-      var dataset1 = President.csv.toObjects(csv);
-      var datasetPre = [];
-      function(d){
-      for(var i = 0; i < 44; i++){
-        var newPoint = d[2];
-        datasetPre.push(newPoint);
-      }};*/
+      var dataset = [5, 10, 15, 20, 25];
 
       /*d3.csv("/..data/President.csv", function(d) {
         return {
@@ -49,7 +42,7 @@
         });
         });
 
-      d3.select("body").selectAll("div").data(field3).enter().append("div").attr("class", "bar").style("height", function(d) {
+      d3.select("body").selectAll("div").data(dataset).enter().append("div").attr("class", "bar").style("height", function(d) {
         var barHeight = d * 5;
         return barHeight + "px";
       });
