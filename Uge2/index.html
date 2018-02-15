@@ -41,7 +41,7 @@
       var field2=[];
       var field3=[];
 
-      d3.csv("President.csv",function(data){
+      d3.csv("President.csv",function(csv){
               csv.map(function(d){
                   field1.push(+d.pNumber);
                   field2.push(d.President);
