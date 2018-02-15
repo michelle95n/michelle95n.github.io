@@ -60,7 +60,7 @@
         console.log(data[0]);
       });
 
-      d3.select("body").selectAll("div").data(d.Month).enter().append("div").attr("class", "bar").style("height", function(d) {
+      d3.select("body").selectAll("div").data(Month).enter().append("div").attr("class", "bar").style("height", function(d) {
         var barHeight = d * 5;
         return barHeight + "px";
       });
