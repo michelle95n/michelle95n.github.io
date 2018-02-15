@@ -20,16 +20,6 @@
       var dataset = [94, 48, 96, 96, 96, 48, 96, 48, 1, 47, 48, 16, 32, 48, 48, 49, 47, 96, 48, 7, 41, 48, 48, 48, 54, 90, 48, 96, 29, 67, 48, 146, 92, 96, 34, 62, 67, 29, 48, 96, 48, 96, 96];
       //var dataset = [5, 10, 15, 20, 25, 30];
 
-      /*d3.csv("/..data/President.csv", function(d) {
-        return {
-          pNumber : +d.number,
-          President : d.President,
-          Month : +d.Month,
-        };
-      }, function(data) {
-        console.log(data[0]);
-      });*/
-
       var field1 = [];
       var field2 = [];
       var field3 = [];
@@ -42,7 +32,7 @@
         });
         });
 
-      d3.select("body").selectAll("div").data(dataset).enter().append("div").attr("class", "bar").style("height", function(d) {
+      d3.select("body").selectAll("div").data(field3).enter().append("div").attr("class", "bar").style("height", function(d) {
         var barHeight = d * 5;
         return barHeight + "px";
       });
