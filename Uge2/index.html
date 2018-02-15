@@ -41,24 +41,20 @@
       var field2=[];
       var field3=[];
 
-      d3.csv("President.csv",function(csv){
-              csv.map(function(d){
-                  field1.push(+d.pNumber);
-                  field2.push(d.President);
-                  field3.push(+d.Month);
-                })
-                //called after the AJAX is success
-                console.log("field1",field1);
-                console.log("field2",field2);
-                console.log("field3",field3);
-                console.log("field1",field1[0]);
-              });
+      d3.csv("President.csv",function(data){
+        data.forEach(function(d) {
+          d.pNumber = +d.pNumber;
+          d.President = +d.President;
+          d.Month = +d.Month;
+        });
+          console.log(data[0]);
+        });
 
       /*d3.csv("President.csv",function(data) {
         console.log(data);
       });*/
 
-      d3.select("body").selectAll("div").data(field3).enter().append("div").attr("class", "bar").style("height", function(d) {
+      d3.select("body").selectAll("div").data(data).enter().append("div").attr("class", "bar").style("height", function(d[2]) {
         var barHeight = d * 5;
         return barHeight + "px";
       }).attr("fill", "purple");
