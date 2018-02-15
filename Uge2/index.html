@@ -9,7 +9,6 @@
       div.bar {
         display: inline-block;
         width: 200px;
-        height: 100px;
         background-color: teal;
         margin-right: 2px;
       }
@@ -65,8 +64,8 @@
       });*/
 
       d3.select("body").selectAll("div").data(field3).enter().append("div").attr("class", "bar").style("height", function(d) {
-        var barHeight = d * 5;
-        return barHeight + "px";
+        //var barHeight = d * 5;
+        return d + "px";
       });
 
 
