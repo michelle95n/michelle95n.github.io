@@ -50,8 +50,8 @@
         });
 
       d3.select("body").selectAll("div").data(field3).enter().append("div").attr("class", "bar").style("height", function(d) {
-        //var barHeight = d * 5;
-        return d + "px";
+        var barHeight = d * 5;
+        return barHeight + "px";
       });
 
 
