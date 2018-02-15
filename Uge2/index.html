@@ -43,13 +43,10 @@
 
       d3.csv("President.csv",function(data){
         data.forEach(function(d) {
-          d.pNumber = +d.pNumber;
-          d.President = d.President;
-          d.Months = +d.Months;
+          field1.push(d.pNumber);
+          field2.push(d.President);
+          field3.push(d.Months);
         });
-        field1.push(d.pNumber);
-        field2.push(d.President);
-        field3.push(d.Months);
         });
 
       d3.select("body").selectAll("div").data(field3).enter().append("div").attr("class", "bar").style("height", function(d) {
