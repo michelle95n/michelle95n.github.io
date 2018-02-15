@@ -41,27 +41,27 @@
       var field2=[];
       var field3=[];*/
 
-      d3.csv("President.csv",function(data){
+      /*d3.csv("President.csv",function(data){
         data.forEach(function(d) {
           d.pNumber = +d.pNumber;
           d.President = d.President;
           d.Months = +d.Months;
         });
           console.log(data[0]);
-        });
+        });*/
 
-      /*d3.csv("President.csv", function(data) {
+      d3.csv("President.csv", function(data) {
         return {
           pNumber : +d.pNumber,
           President : d.President,
-          Month : +d.Month
+          Months : +d.Months
         };
       }, function(data) {
         console.log(data[0]);
-      });*/
+      });
 
-      d3.select("body").selectAll("div").data(d.Months).enter().append("div").attr("class", "bar").style("height", function(d) {
-        var barHeight = d * 5;
+      d3.select("body").selectAll("div").data(data).enter().append("div").attr("class", "bar").style("height", function(d) {
+        var barHeight = d[2] * 5;
         return barHeight + "px";
       });
 
