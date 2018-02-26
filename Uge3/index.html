@@ -14,11 +14,6 @@
         <p id="FruitsStor">Click here to see how many fruits from storage are available per month. </p>
         <p id="VegStor">Click here to see how many vegetables from storage are available per month. </p>
 
-        <clipPath id="chart-area">
-          <rect x="20" y="30" width="500" height="300"></rect>
-        </clipPath>
-
-
         <script type="text/javascript">
 
         // The data set
@@ -34,7 +29,7 @@
         {index: 0, month: "Sep", count: 10},
         {index: 0, month: "Oct", count: 5},
         {index: 0, month: "Nov", count: 0},
-        {index: 0, month: "Dec", count: 0},*/
+        {index: 0, month: "Dec", count: 0},
         {index: 1, month: "Jan", count: 2},
         {index: 1, month: "Feb", count: 2},
         {index: 1, month: "Mar", count: 1},
@@ -46,8 +41,8 @@
         {index: 1, month: "Sep", count: 0},
         {index: 1, month: "Oct", count: 0},
         {index: 1, month: "Nov", count: 2},
-        {index: 1, month: "Dec", count: 2}
-        /*{index: 2, month: "Jan", count: 0},
+        {index: 1, month: "Dec", count: 2},
+        {index: 2, month: "Jan", count: 0},
         {index: 2, month: "Feb", count: 0},
         {index: 2, month: "Mar", count: 0},
         {index: 2, month: "Apr", count: 2},
@@ -58,7 +53,7 @@
         {index: 2, month: "Sep", count: 33},
         {index: 2, month: "Oct", count: 31},
         {index: 2, month: "Nov", count: 11},
-        {index: 2, month: "Dec", count: 3},
+        {index: 2, month: "Dec", count: 3},*/
         {index: 3, month: "Jan", count: 9},
         {index: 3, month: "Feb", count: 9},
         {index: 3, month: "Mar", count: 6},
@@ -70,7 +65,7 @@
         {index: 3, month: "Sep", count: 0},
         {index: 3, month: "Oct", count: 0},
         {index: 3, month: "Nov", count: 6},
-        {index: 3, month: "Dec", count: 8} */];
+        {index: 3, month: "Dec", count: 8} ];
 
         var w = 500;
         var h = 300;
@@ -81,17 +76,17 @@
             return d.key;
         };
 
-        var dataSize = 12;
-
         // Create x scale
         var xScale = d3.scaleBand()
                 .domain(d3.range(dataset.length + 1))
-                .rangeRound([0, w])
+                .range([0, w])
                 .paddingInner(0.02);
-        /*var xScale = d3.scaleBand()
-              .domain(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
+
+        // Create labels for the x axis
+        var xLabel = d3.scaleBand()
+              .domain(["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
               .rangeRound([0, w])
-              .paddingInner(0.05);*/
+              .paddingInner(0.02);
 
         // Create y scale
         var yScale = d3.scaleLinear()
@@ -103,7 +98,7 @@
 
         // Define x axis
         var xAxis = d3.axisBottom()
-              .scale(xScale)
+              .scale(xLabel)
               .ticks(12);
 
         // Define y axis
@@ -123,12 +118,12 @@
                     .append("rect")
                     .attr("x", padding)
                     .attr("y", padding)
-                    .attr("width", w - padding * 3)
-                    .attr("height", h - padding * 2);
+                    .attr("width", w - padding)
+                    .attr("height", h - (padding * 2));
 
         //Create bars
         svg.append("g")
-            .attr("id", "rect")
+            .attr("id", "rects")
             .attr("clip-path", "url(#chart-area)")
             .selectAll("rect")
             .data(dataset, key)
@@ -180,7 +175,7 @@
               .attr("transform", "translate(" + padding + ", 0)")
               .call(yAxis);
 
-        // When clicked update with new values
+        // When clicked update with new data sets
         d3.selectAll("p")
             .on("click", function() {
 
@@ -231,7 +226,7 @@
                 {index: 1, month: "Nov", count: 2},
                 {index: 1, month: "Dec", count: 2}];
 
-              } else {
+              } else if (paragraphID == "VegStor") {
 
                 dataset = [{index: 3, month: "Jan", count: 9},
                 {index: 3, month: "Feb", count: 9},
@@ -248,15 +243,16 @@
               }
 
           // Update x scale
-          xScale.domain(d3.range(dataset.length +1));
+          xScale.domain(d3.range(dataset.length + 1));
 
           // Update y scale
           yScale.domain([0, d3.max(dataset, function(d) {
             return d.count;
-          })]);
+          })])
+          //.range([h, 0]);
 
           // Update the bars
-          /*svg.selectAll("rect")
+          svg.selectAll("rect")
              .data(dataset)
              .transition()
              .delay(function(d, i) {
@@ -270,38 +266,13 @@
              .attr("y", function(d) {
                 return yScale(d.count);
              })
-             .attr("width", xScale.bandwidth())
+             //.attr("width", xScale.bandwidth())
              .attr("height", function(d) {
                return h - yScale(d.count);
              })
              .attr("fill", function(d) {
               return "rgb(0, 0, " + Math.round(d.count * 10) + ")";
-            });*/
-
-            svg.append("g")
-                .attr("id", "rect")
-                .attr("clip-path", "url(#chart-area)")
-                .selectAll("rect")
-                .data(dataset)
-                .transition()
-                .delay(function(d, i) {
-                  return i / dataset.length * 1000;
-                })
-                .duration(500)
-                .ease(d3.easeLinear)
-                .attr("x", function(d, i) {
-                  return xScale(i + 1);
-                })
-                .attr("y", function(d) {
-                  return yScale(d.count);
-                })
-                .attr("width", xScale.bandwidth())
-                .attr("height", function(d, i) {
-                  return h - yScale(d.count);
-                })
-                .attr("fill", function(d) {
-                  return "rgb(0, 0, " + Math.round(d.count * 10) + ")";
-                });
+            });
 
               // Update labels
               svg.selectAll("text")
@@ -335,5 +306,7 @@
 
 
         </script>
+
       </body>
+
   </html>
