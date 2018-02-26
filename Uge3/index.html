@@ -79,7 +79,7 @@
         // Create x scale
         var xScale = d3.scaleBand()
                 .domain(d3.range(dataset.length + 1))
-                .range([0, w])
+                .rangeRound([0, w])
                 .paddingInner(0.02);
 
         // Create labels for the x axis
@@ -109,17 +109,17 @@
         //Create SVG element
         var svg = d3.select("body")
               .append("svg")
-              .attr("width", w)
-              .attr("height", h);
+              .attr("width", w + padding)
+              .attr("height", h + padding);
 
               // Define clipping path
               svg.append("clipPath")
                     .attr("id", "chart-area")
                     .append("rect")
                     .attr("x", padding)
-                    .attr("y", padding)
-                    .attr("width", w - padding)
-                    .attr("height", h - (padding * 2));
+                    .attr("y", 0)
+                    .attr("width", w)
+                    .attr("height", h);
 
         //Create bars
         svg.append("g")
@@ -166,7 +166,7 @@
         // Create x axis
         svg.append("g")
               .attr("class", "x axis")
-              .attr("transform", "translate(0," + (h - padding) + ")")
+              .attr("transform", "translate(0," + h + ")")
               .call(xAxis);
 
         // Create y axis
@@ -243,13 +243,12 @@
               }
 
           // Update x scale
-          xScale.domain(d3.range(dataset.length + 1));
+          //xScale.domain(d3.range(dataset.length + 1));
 
           // Update y scale
           yScale.domain([0, d3.max(dataset, function(d) {
             return d.count;
-          })])
-          //.range([h, 0]);
+          })]);
 
           // Update the bars
           svg.selectAll("rect")
@@ -301,9 +300,8 @@
                       .transition()
                       .duration(1000)
                       .call(yAxis);
+
             });
-
-
 
         </script>
 
