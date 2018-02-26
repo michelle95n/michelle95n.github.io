@@ -5,58 +5,60 @@
       <title>D3 Page Template</title>
       <script type="text/javascript" src="../d3.js"></script>
 
-      <style type="text/css">
-      div.bar {
-        display: inline-block;
-        width: 20px;
-        background-color: teal;
-        margin-right: 2px;
-      }
-      </style>
-
   </head>
   <body>
       <script type="text/javascript">
-      var dataset = [94, 48, 96, 96, 96, 48, 96, 48, 1, 47, 48, 16, 32, 48, 48, 49, 47, 96, 48, 7, 41, 48, 48, 48, 54, 90, 48, 96, 29, 67, 48, 146, 92, 96, 34, 62, 67, 29, 48, 96, 48, 96, 96];
-      //var dataset = [5, 10, 15, 20, 25, 30];
 
       var field1 = [];
       var field2 = [];
       var field3 = [];
+      var w = 500;
+      var h = 150;
+      var w2 = 800;
+      var barPadding = 1;
 
-      d3.csv("President.csv",function(data){
+      var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
+      var svg1 = d3.select("body").append("svg").attr("width", w2).attr("height", h);
+
+      // Load data into the 3 arrays
+      d3.csv("President.csv", function(data){
         data.forEach(function(d) {
           field1.push(+d.pNumber);
           field2.push(d.President);
           field3.push(+d.Months);
         });
-        });
 
-      d3.select("body").selectAll("div").data(field3).enter().append("div").attr("class", "bar").style("height", function(d) {
-        var barHeight = d * 5;
-        return barHeight + "px";
+        // Make jitterplot
+        svg.selectAll("circle").data(field3).enter().append("circle").attr("cx", function(d){
+          return d * 3;
+        }).attr("cy", function(d){
+          return Math.random() * 100;
+        }).attr("r", function(d){
+          return 5;
+        }).attr("fill", "none").attr("stroke", "black");
+
+        // New line
+        d3.select("body").append("br");
+
+        // Make histogram
+        svg1.selectAll("rect").data(field3).enter().append("rect").attr("x", function(d, i){
+          return i * (w / field3.length);
+        }).attr("y", function(d){
+            return h - d;
+        }).attr("width",  (w / field3.length - barPadding)).attr("height", function(d){
+          return d * 4;
+        }).attr("fill", "purple");
+        // Labels in the histogram
+        svg1.selectAll("text").data(field3).enter().append("text").text(function(d){
+          return d;
+        }).attr("x", function(d, i){
+          return i * (w / field3.length) + (w / field3.length - barPadding) / 2;
+        }).attr("y", function(d){
+          return h -  d;
+        }).attr("font-family", "sans-serif").attr("font-size", "11px").attr("fill", "black").attr("text-anchor", "middle");
+
+
       });
-
-
-      /*// Initialize space for the plot
-      var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
-
-
-      svg.selectAll("circle").data(dataset).enter().append("circle").attr("cx", function(d){
-        return d[2];
-      }).attr("cy", function(d){
-        return 10;
-      }).attr("r", function(d){
-        return 5;
-      }).attr("fill", "purple");*/
-
-      /*svg.selectAll("text").data(President.csv).enter().append("text").text(function(d){
-        return d[0] + "," + d[1];
-      }).attr("x", function(d){
-        return d[0];
-      }).attr("y", function(d){
-        return d[1];
-      }).attr("font-family", "sans-serif").attr("font-size", "11px").attr("fill", "red");*/
 
       </script>
   </body>
