@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title>Week 4 from the book</title>
+      <script type="text/javascript" src="../d3.js"></script>
+  </head>
+  <body>
+
+    <style type = "text/CSS">
+
+    </style>
+
+      <script type="text/javascript">
+
+      // Hover over histogram
+			//Width and height
+			/*var w = 600;
+			var h = 250;
+
+      // The data set
+			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+
+      // Create x and y scales
+			var xScale = d3.scaleBand()
+							.domain(d3.range(dataset.length))
+							.rangeRound([0, w])
+							.paddingInner(0.05);
+
+			var yScale = d3.scaleLinear()
+							.domain([0, d3.max(dataset)])
+							.range([0, h]);
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			//Create bars
+			svg.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+         .on("click", function() {
+           sortBars();
+         })
+			   .attr("x", function(d, i) {
+			   		return xScale(i);
+			   })
+			   .attr("y", function(d) {
+			   		return h - yScale(d);
+			   })
+			   .attr("width", xScale.bandwidth())
+			   .attr("height", function(d) {
+			   		return yScale(d);
+			   })
+			   .attr("fill", function(d) {
+					return "rgb(0, 0, " + Math.round(d * 10) + ")";
+			   })
+         .on("mouseover", function(d) {
+           // Get this bar's x/y values, then augment for the tooltip
+           var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;
+           var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + h / 2;
+           //Update the tooltip position and valuel
+           d3.select("#tooltip")
+            .style("left", xPosition + "px")
+            .style("top", yPosition + "px")
+            .select("#value")
+            .text(d);
+
+          //Show tooltip
+          d3.select("#tooltip").classed("hidden", false);
+        })
+        .on("mouseout", function() {
+           //Hide the tooltip
+           d3.select("#tooltip").classed("hidden", true);
+        });
+
+
+			//Create labels
+			svg.selectAll("text")
+			   .data(dataset)
+			   .enter()
+			   .append("text")
+			   .text(function(d) {
+			   		return d;
+			   })
+			   .attr("text-anchor", "middle")
+			   .attr("x", function(d, i) {
+			   		return xScale(i) + xScale.bandwidth() / 2;
+			   })
+			   .attr("y", function(d) {
+			   		return h - yScale(d) + 14;
+			   })
+			   .attr("font-family", "sans-serif")
+			   .attr("font-size", "11px")
+			   .attr("fill", "white");
+
+      var sortOrders = false;
+
+
+      // Sort the bars
+      var sortBars = function() {
+
+        sortOrders = !sortOrders;
+        svg.selectAll("rect")
+          .sort(function(a, b) {
+            if (sortOrders) {
+              return d3.ascending(a, b);
+            } else {
+              return d3.descending(a, b)
+            }
+          })
+          .transition()
+          .delay(function(d, i) {
+            return i * 50;
+          })
+          .duration(1000)
+          .attr("x", function(d, i) {
+            return xScale(i);
+          });
+      };*/
+
+      //Initializing
+      var w = 800;
+      var h = 300;
+      var padding = 40;
+
+      var dataset;
+      var xScale;
+      var yScale;
+      var line;
+      var xAxis;
+      var yAxis;
+
+      var formatTime = d3.timeFormat("%Y");
+
+      //Get the wanted format of the data
+      var rowConverter = function(d) {
+        return {
+          // Make a new Date object for each year + month
+          date: new Date(+d.year, (+d.month - 1)),
+          //Convert from string to float
+          average: parseFloat(d.average)
+        };
+      };
+
+      //Load in data
+      d3.csv("mauna_loa_co2_monthly_averages.csv", rowConverter, function(data) {
+
+        dataset = data;
+
+        //Print data to console as table for verification
+        //console.table(dataset, ["date", "average"]);
+
+      // Create xscale
+      xScale = d3.scaleTime()
+        .domain([
+          d3.min(dataset, function(d) {
+            return d.date;
+          }),
+          d3.max(dataset, function(d) {
+            d.date;
+          })
+        ])
+        .range([padding, w]);
+
+      //Create yscale
+      yScale = d3.scaleLinear()
+        .domain([0, d3.max(dataset, function(d) {
+            return d.average;
+          })])
+          .range([h, 0]);
+
+      //Define x axis
+      xAxis = d3.axisBottom()
+        .scale(xScale)
+        .ticks(10)
+        .tickFormat(formatTime);
+
+      //Define y axis
+      yAxis = d3.axisLeft()
+        .scale(yScale)
+        .ticks(10);
+
+        //Define line generator
+        var line = d3.line()
+          .x(function(d) {
+            return xScale(d.date);
+          })
+          .y(function(d) {
+            return yScale(d.average);
+          });
+
+        //Create SVG element
+        var svg = d3.select("body")
+          .append(svg)
+          .attr("width", w)
+          .attr("height", h);
+
+        //Create line
+        svg.append("path")
+          .datum(dataset)
+          .attr("class", "line")
+          .attr("d", line)
+          .attr("fill", "black");
+
+        //Create axis
+        svg.append("g")
+          .attr("class", "axis")
+          .attr("transform", "translate(0, " + ( h- padding) + ")")
+          .call(xAxis);
+
+        svg.append("g")
+          .attr("class", "axis")
+          .attr("transform", "translate( " + padding + ", 0)")
+          .call(yAxis);
+
+        });
+
+      </script>
+
+    </body>
+  </html>

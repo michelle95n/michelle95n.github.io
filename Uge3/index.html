@@ -1,287 +1,291 @@
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Week 3</title>
-        <script type="text/javascript" src="d3.js"></script>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
 
-        <p>This is a reproduction of <a href="http://iquantny.tumblr.com/post/129373499164/this-is-quantifiably-the-best-month-to-go-to-the">http://iquantny.tumblr.com/post/129373499164/this-is-quantifiably-the-best-month-to-go-to-the</a></p>
+<head>
+  <meta charset="utf-8">
+  <title>Week 3</title>
+  <script type="text/javascript" src="d3.js"></script>
+</head>
 
-        <p id="FruitsFresh">Click here to see how many fresh fruits are available per month. </p>
-        <p id="VegFresh">Click here to see how many fresh vegetables are available per month. </p>
-        <p id="FruitsStor">Click here to see how many fruits from storage are available per month. </p>
-        <p id="VegStor">Click here to see how many vegetables from storage are available per month. </p>
+<body>
 
-        <script type="text/javascript">
+  <p>This is a reproduction of
+    <a href="http://iquantny.tumblr.com/post/129373499164/this-is-quantifiably-the-best-month-to-go-to-the">http://iquantny.tumblr.com/post/129373499164/this-is-quantifiably-the-best-month-to-go-to-the</a>
+  </p>
 
-        // The start data set
-        var dataset = [
-        {index: 3, month: "Jan", count: 9},
-        {index: 3, month: "Feb", count: 9},
-        {index: 3, month: "Mar", count: 6},
-        {index: 3, month: "Apr", count: 3},
-        {index: 3, month: "May", count: 3},
-        {index: 3, month: "Jun", count: 3},
-        {index: 3, month: "Jul", count: 2},
-        {index: 3, month: "Aug", count: 1},
-        {index: 3, month: "Sep", count: 0},
-        {index: 3, month: "Oct", count: 0},
-        {index: 3, month: "Nov", count: 6},
-        {index: 3, month: "Dec", count: 8} ];
+  <p id="FruitsFresh">Click here to see how many fresh fruits are available per month. </p>
+  <p id="VegFresh">Click here to see how many fresh vegetables are available per month. </p>
+  <p id="FruitsStor">Click here to see how many fruits from storage are available per month. </p>
+  <p id="VegStor">Click here to see how many vegetables from storage are available per month. </p>
 
-        var w = 500;
-        var h = 300;
-        var padding = 35;
+  <script type="text/javascript">
 
-        // define key function, when binding data
-        var key = function(d) {
-            return d.key;
-        };
+    // The start data set
+    var dataset = [
+      { index: 3, month: "Jan", count: 9 },
+      { index: 3, month: "Feb", count: 9 },
+      { index: 3, month: "Mar", count: 6 },
+      { index: 3, month: "Apr", count: 3 },
+      { index: 3, month: "May", count: 3 },
+      { index: 3, month: "Jun", count: 3 },
+      { index: 3, month: "Jul", count: 2 },
+      { index: 3, month: "Aug", count: 1 },
+      { index: 3, month: "Sep", count: 0 },
+      { index: 3, month: "Oct", count: 0 },
+      { index: 3, month: "Nov", count: 6 },
+      { index: 3, month: "Dec", count: 8 }];
 
-        // Create x scale
-        var xScale = d3.scaleBand()
-                .domain(d3.range(dataset.length + 1))
-                .rangeRound([0, w + padding])
-                .paddingInner(0.02);
+    var w = 400;
+    var h = 300;
+    var padding = 35;
 
-        // Create y scale
-        var yScale = d3.scaleLinear()
-                .domain([0, d3.max(dataset, function(d) {
-                  return d.count;
-                })])
-                .range([h + padding * 2, 0]);
+    // define key function, when binding data
+    var key = function (d) {
+      return d.key;
+    };
 
-        // Create labels for the x axis
-        var xLabel = d3.scaleBand()
-              .domain(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
-              .rangeRound([0, w])
-              .paddingInner(0.02);
+    // Create x scale
+    var xScale = d3.scaleBand()
+      .domain(d3.range(dataset.length + 1))
+      .rangeRound([0, w + padding])
+      .paddingInner(0.02);
 
-        // Create y scale
-        var yScale = d3.scaleLinear()
-                .domain([0, d3.max(dataset, function(d) {
-                  return d.count;
-                })])
-                .range([h, 0]);
+    // Create y scale
+    var yScale = d3.scaleLinear()
+      .domain([0, d3.max(dataset, function (d) {
+        return d.count;
+      })])
+      .range([h + padding * 2, 0]);
 
-        // Define x axis
-        var xAxis = d3.axisBottom()
-              .scale(xLabel)
-              .ticks(12);
+    // Create labels for the x axis
+    var xLabel = d3.scaleBand()
+      .domain(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
+      .rangeRound([0, w])
+      .paddingInner(0.02);
 
-        // Define y axis
-        var yAxis = d3.axisLeft()
-              .scale(yScale)
-              .ticks(5);
+    // Create y scale
+    var yScale = d3.scaleLinear()
+      .domain([0, d3.max(dataset, function (d) {
+        return d.count;
+      })])
+      .range([h, 0]);
 
-        //Create SVG element
-        var svg = d3.select("body")
-              .append("svg")
-              .attr("width", w + padding * 2)
-              .attr("height", h + padding * 3);
+    // Define x axis
+    var xAxis = d3.axisBottom()
+      .scale(xLabel)
+      .ticks(12);
 
-        //Create bars
-        svg.append("g")
-            .selectAll("rect")
-            .data(dataset, key)
-            .enter()
-            .append("rect")
-            .attr("x", function(d, i) {
-              return xScale(i + 1) + padding;
-            })
-            .attr("y", function(d) {
-              return yScale(d.count) + padding * 2;
-            })
-            .attr("width", xScale.bandwidth())
-            .attr("height", function(d, i) {
-              return h - yScale(d.count);
-            })
-            .attr("fill", function(d) {
-              return "rgb(0, 0, " + Math.round(d.count * 10) + ")";
-            });
+    // Define y axis
+    var yAxis = d3.axisLeft()
+      .scale(yScale)
+      .ticks(5);
 
-        //Create labels
+    //Create SVG element
+    var svg = d3.select("body")
+      .append("svg")
+      .attr("width", w + padding * 3)
+      .attr("height", h + padding * 3);
+
+    //Create bars
+    svg.append("g")
+      .selectAll("rect")
+      .data(dataset, key)
+      .enter()
+      .append("rect")
+      .attr("x", function (d, i) {
+        return xScale(i + 1) + padding;
+      })
+      .attr("y", function (d) {
+        return yScale(d.count) + padding * 2;
+      })
+      .attr("width", xScale.bandwidth())
+      .attr("height", function (d, i) {
+        return h - yScale(d.count);
+      })
+      .attr("fill", function (d) {
+        return "rgb(0, 0, " + Math.round(d.count * 10) + ")";
+      });
+
+    //Create labels
+    svg.selectAll("text")
+      .data(dataset, key)
+      .enter()
+      .append("text")
+      .text(function (d) {
+        return d.count;
+      })
+      .attr("text-anchor", "middle")
+      .attr("x", function (d, i) {
+        return xScale(i + 1) + xScale.bandwidth() / 2 + padding;
+      })
+      .attr("y", function (d) {
+        return yScale(d.count) + 14 + padding * 2;
+      })
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "11px")
+      .attr("fill", "white");
+
+    // Create x axis label
+    svg.append("text")
+      .attr("transform", "translate(" + (w / 2 + padding) + " , " + (h + padding * 3) + " )")
+      .style("text-anchor", "middle")
+      .text("Months")
+      .attr("fill", "black");
+
+    // Create y axis label
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -h / 2 - padding * 2)
+      .attr("y", padding)
+      .style("text-anchor", "middle")
+      .text("Number of Unique Kinds of Produce")
+      .attr("fill", "black");
+
+    // Create header
+    svg.append("text")
+      .attr("transform", "translate(" + (w / 2 + padding) + " , " + 20 + ")")
+      .style("text-anchor", "middle")
+      .text("NYC green markets - Unique Produce Types");
+
+    // Create x axis
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(" + (padding + padding) + "," + (h + padding * 2) + ")")
+      .call(xAxis);
+
+    // Create y axis
+    svg.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate(" + (padding * 2) + ", " + (padding * 2) + ")")
+      .call(yAxis);
+
+    // When clicked update with new data sets
+    d3.selectAll("p")
+      .on("click", function () {
+
+        var paragraphID = d3.select(this).attr("id");
+
+        if (paragraphID == "FruitsFresh") {
+
+          var dataset = [{ index: 0, month: "Jan", count: 0 },
+          { index: 0, month: "Feb", count: 0 },
+          { indec: 0, month: "Mar", count: 0 },
+          { index: 0, month: "Apr", count: 0 },
+          { index: 0, month: "May", count: 0 },
+          { index: 0, month: "Jun", count: 1 },
+          { index: 0, month: "Jul", count: 7 },
+          { index: 0, month: "Aug", count: 8 },
+          { index: 0, month: "Sep", count: 10 },
+          { index: 0, month: "Oct", count: 5 },
+          { index: 0, month: "Nov", count: 0 },
+          { index: 0, month: "Dec", count: 0 }];
+
+        } else if (paragraphID == "VegFresh") {
+
+          var dataset = [{ index: 2, month: "Jan", count: 0 },
+          { index: 2, month: "Feb", count: 0 },
+          { index: 2, month: "Mar", count: 0 },
+          { index: 2, month: "Apr", count: 2 },
+          { index: 2, month: "May", count: 11 },
+          { index: 2, month: "Jun", count: 16 },
+          { index: 2, month: "Jul", count: 23 },
+          { index: 2, month: "Aug", count: 28 },
+          { index: 2, month: "Sep", count: 33 },
+          { index: 2, month: "Oct", count: 31 },
+          { index: 2, month: "Nov", count: 11 },
+          { index: 2, month: "Dec", count: 3 }];
+
+        } else if (paragraphID == "FruitsStor") {
+
+          var dataset = [{ index: 1, month: "Jan", count: 2 },
+          { index: 1, month: "Feb", count: 2 },
+          { index: 1, month: "Mar", count: 1 },
+          { index: 1, month: "Apr", count: 1 },
+          { index: 1, month: "May", count: 1 },
+          { index: 1, month: "Jun", count: 1 },
+          { index: 1, month: "Jul", count: 0 },
+          { index: 1, month: "Aug", count: 0 },
+          { index: 1, month: "Sep", count: 0 },
+          { index: 1, month: "Oct", count: 0 },
+          { index: 1, month: "Nov", count: 2 },
+          { index: 1, month: "Dec", count: 2 }];
+
+        } else if (paragraphID == "VegStor") {
+
+          var dataset = [{ index: 3, month: "Jan", count: 9 },
+          { index: 3, month: "Feb", count: 9 },
+          { index: 3, month: "Mar", count: 6 },
+          { index: 3, month: "Apr", count: 3 },
+          { index: 3, month: "May", count: 3 },
+          { index: 3, month: "Jun", count: 3 },
+          { index: 3, month: "Jul", count: 2 },
+          { index: 3, month: "Aug", count: 1 },
+          { index: 3, month: "Sep", count: 0 },
+          { index: 3, month: "Oct", count: 0 },
+          { index: 3, month: "Nov", count: 6 },
+          { index: 3, month: "Dec", count: 8 }];
+        }
+
+        // Update y scale
+        yScale.domain([0, d3.max(dataset, function (d) {
+          return d.count;
+        })]);
+
+        // Update the bars
+        svg.selectAll("rect")
+          .data(dataset)
+          .transition()
+          .delay(function (d, i) {
+            return i / dataset.length * 1000;
+          })
+          .duration(1000)
+          .ease(d3.easeLinear)
+          .attr("x", function (d, i) {
+            return xScale(i + 1) + padding;
+          })
+          .attr("y", function (d) {
+            return yScale(d.count) + padding * 2;
+          })
+          .attr("width", xScale.bandwidth())
+          .attr("height", function (d) {
+            return h - yScale(d.count);
+          })
+          .attr("fill", function (d) {
+            return "rgb(0, 0, " + Math.round(d.count * 10) + ")";
+          });
+
+        // Update labels
         svg.selectAll("text")
-           .data(dataset, key)
-           .enter()
-           .append("text")
-           .text(function(d) {
-              return d.count;
-           })
-           .attr("text-anchor", "middle")
-           .attr("x", function(d, i) {
-              return xScale(i + 1) + xScale.bandwidth() / 2 + padding;
-           })
-           .attr("y", function(d) {
-              return yScale(d.count) + 14 + padding * 2;
-           })
-           .attr("font-family", "sans-serif")
-           .attr("font-size", "11px")
-           .attr("fill", "white");
-
-           // Create x axis label
-           svg.append("text")
-                .attr("transform", "translate(" + (w/2 + padding) + " , " + (h + padding * 3) + " )")
-                .style("text-anchor", "middle")
-                .text("Months")
-                .attr("fill", "black");
-
-            // Create y axis label
-            svg.append("text")
-                 .attr("transform", "rotate(-90)")
-                 .attr("x", -h/2 - padding * 2)
-                 .attr("y", padding)
-                 .style("text-anchor", "middle")
-                 .text("Number of Unique Kinds of Produce")
-                 .attr("fill", "black");
-
-            // Create header
-            svg.append("text")
-                  .attr("transform", "translate(" + (w/2 + padding) + " , " + 20 + ")")
-                  .style("text-anchor", "middle")
-                  .text("NYC green markets - Unique Produce Types");
-
-        // Create x axis
-        svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(" + (padding * 2) + "," + (h + padding * 2) + ")")
-              .call(xAxis);
-
-        // Create y axis
-        svg.append("g")
-              .attr("class", "y axis")
-              .attr("transform", "translate(" + (padding * 2) + ", " + (padding * 2) + ")")
-              .call(yAxis);
-
-        // When clicked update with new data sets
-        d3.selectAll("p")
-            .on("click", function() {
-
-              var paragraphID = d3.select(this).attr("id");
-
-              if (paragraphID == "FruitsFresh") {
-
-                var dataset = [{index: 0, month: "Jan", count: 0},
-                {index: 0, month: "Feb", count: 0},
-                {indec: 0, month: "Mar", count: 0},
-                {index: 0, month: "Apr", count: 0},
-                {index: 0, month: "May", count: 0},
-                {index: 0, month: "Jun", count: 1},
-                {index: 0, month: "Jul", count: 7},
-                {index: 0, month: "Aug", count: 8},
-                {index: 0, month: "Sep", count: 10},
-                {index: 0, month: "Oct", count: 5},
-                {index: 0, month: "Nov", count: 0},
-                {index: 0, month: "Dec", count: 0}];
-
-              } else if (paragraphID == "VegFresh") {
-
-                var dataset = [  {index: 2, month: "Jan", count: 0},
-                {index: 2, month: "Feb", count: 0},
-                {index: 2, month: "Mar", count: 0},
-                {index: 2, month: "Apr", count: 2},
-                {index: 2, month: "May", count: 11},
-                {index: 2, month: "Jun", count: 16},
-                {index: 2, month: "Jul", count: 23},
-                {index: 2, month: "Aug", count: 28},
-                {index: 2, month: "Sep", count: 33},
-                {index: 2, month: "Oct", count: 31},
-                {index: 2, month: "Nov", count: 11},
-                {index: 2, month: "Dec", count: 3}];
-
-              } else if (paragraphID == "FruitsStor") {
-
-                var dataset = [{index: 1, month: "Jan", count: 2},
-                {index: 1, month: "Feb", count: 2},
-                {index: 1, month: "Mar", count: 1},
-                {index: 1, month: "Apr", count: 1},
-                {index: 1, month: "May", count: 1},
-                {index: 1, month: "Jun", count: 1},
-                {index: 1, month: "Jul", count: 0},
-                {index: 1, month: "Aug", count: 0},
-                {index: 1, month: "Sep", count: 0},
-                {index: 1, month: "Oct", count: 0},
-                {index: 1, month: "Nov", count: 2},
-                {index: 1, month: "Dec", count: 2}];
-
-              } else if (paragraphID == "VegStor") {
-
-                var dataset = [{index: 3, month: "Jan", count: 9},
-                {index: 3, month: "Feb", count: 9},
-                {index: 3, month: "Mar", count: 6},
-                {index: 3, month: "Apr", count: 3},
-                {index: 3, month: "May", count: 3},
-                {index: 3, month: "Jun", count: 3},
-                {index: 3, month: "Jul", count: 2},
-                {index: 3, month: "Aug", count: 1},
-                {index: 3, month: "Sep", count: 0},
-                {index: 3, month: "Oct", count: 0},
-                {index: 3, month: "Nov", count: 6},
-                {index: 3, month: "Dec", count: 8}];
-              }
-
-          // Update y scale
-          yScale.domain([0, d3.max(dataset, function(d) {
+          .data(dataset)
+          .transition()
+          .delay(function (d, i) {
+            return i / dataset.length * 1000;
+          })
+          .duration(1100)
+          .text(function (d) {
             return d.count;
-          })]);
+          })
+          .attr("text-anchor", "middle")
+          .attr("x", function (d, i) {
+            return xScale(i + 1) + xScale.bandwidth() / 2 + padding;
+          })
+          .attr("y", function (d) {
+            return yScale(d.count) + padding * 2 + 14;
+          })
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "11px")
+          .attr("fill", "white");
 
-          // Update the bars
-          svg.selectAll("rect")
-             .data(dataset)
-             .transition()
-             .delay(function(d, i) {
-               return i / dataset.length * 1000;
-             })
-             .duration(1000)
-             .ease(d3.easeLinear)
-             .attr("x", function(d, i) {
-               return xScale(i + 1) + padding;
-             })
-             .attr("y", function(d) {
-                return yScale(d.count) + padding * 2;
-             })
-             .attr("width", xScale.bandwidth())
-             .attr("height", function(d) {
-               return h - yScale(d.count);
-             })
-             .attr("fill", function(d) {
-              return "rgb(0, 0, " + Math.round(d.count * 10) + ")";
-            });
+        // Update y axis
+        svg.select(".y.axis")
+          .transition()
+          .duration(1000)
+          .call(yAxis);
 
-              // Update labels
-              svg.selectAll("text")
-                 .data(dataset)
-                 .transition()
-                 .delay(function(d, i) {
-                   return i / dataset.length * 1000;
-                 })
-                 .duration(1100)
-                 .text(function(d) {
-                    return d.count;
-                 })
-                 .attr("text-anchor", "middle")
-                 .attr("x", function(d, i) {
-                    return xScale(i + 1) + xScale.bandwidth() / 2 + padding;
-                 })
-                 .attr("y", function(d) {
-                    return yScale(d.count) + padding * 2 + 14;
-                 })
-                 .attr("font-family", "sans-serif")
-                 .attr("font-size", "11px")
-                 .attr("fill", "white");
+      });
 
-                // Update y axis
-                 svg.select(".y.axis")
-                      .transition()
-                      .duration(1000)
-                      .call(yAxis);
+  </script>
 
-            });
+</body>
 
-        </script>
-
-      </body>
-
-  </html>
+</html>
